@@ -1,70 +1,85 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Denombrements
 {
     class Program
     {
+        static long MultiplicationFactorielle(int initialisation, int totalNombres)
+        {
+            long permutations = 1;
+            for (int k = initialisation; k <= totalNombres; k++)
+            {
+                permutations *= k;
+            }
+            return permutations;
+        }
+        static int SaisieNombre(string message)
+        {
+            Console.Write(message);
+            int nombre = int.Parse(Console.ReadLine());
+            return nombre;
+        }
+
+        /// <summary>
+        /// Calcule le nombre de permutations d'un total d'éléments, en tenant compte de l'ordre de ces éléments.
+        /// </summary>
+        static void Permutation()
+        {
+            int totalNombres = SaisieNombre("Nombre total de nombres à gérer = ");
+            Console.WriteLine(totalNombres + "! = " + MultiplicationFactorielle(1, totalNombres));
+        }
+
+        /// <summary>
+        /// Calcule le nombre d'arrangements d'un nombre d'éléments parmi un tout, en tenant compte de l'ordre de ces éléments.
+        /// </summary>
+        static void Arrangement()
+        {
+            int totalNombres = SaisieNombre("Nombre total de nombres à gérer = ");
+            int elements = SaisieNombre("Nombre d'éléments dans le sous ensemble = ");
+            Console.WriteLine("A(" + totalNombres + "/" + elements + ") = " + MultiplicationFactorielle(totalNombres - elements + 1, totalNombres));
+        }
+
+        /// <summary>
+        /// Calcule le nombre de combinaisons d'un nombre d'éléments parmi un tout, sans tenir compte de l'ordre
+        /// </summary>
+        static void Combinaison()
+        {
+            int totalNombres = SaisieNombre("Nombre total de nombres à gérer = ");
+            int elements = SaisieNombre("Nombre d'éléments dans le sous ensemble = ");
+            Console.WriteLine("C(" + totalNombres + "/" + elements + ") = " + (MultiplicationFactorielle(totalNombres - elements + 1, totalNombres) / MultiplicationFactorielle(1, elements)));
+        }
         static void Main(string[] args)
         {
-            int c = 1;
-            while (c != 0)
+            char choix = '1';
+            while (choix != 0)
             {
+                // Demande de saisie
                 Console.WriteLine("Permutation ...................... 1");
                 Console.WriteLine("Arrangement ...................... 2");
                 Console.WriteLine("Combinaison ...................... 3");
                 Console.WriteLine("Quitter .......................... 0");
                 Console.Write("Choix :                            ");
-                c = int.Parse(Console.ReadLine());
+                choix = Console.ReadKey().KeyChar;
+                Console.WriteLine();
 
-                if (c == 0) { Environment.Exit(0); }
-
-                if (c == 1)
+                // Traitement de l'entrée
+                switch (choix)
                 {
-                    Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                    int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                                                           // calcul de r
-                    long r = 1;
-                    for (int k = 1; k <= n; k++)
-                        r *= k;
-                    Console.WriteLine(n + "! = " + r);
-                }
-                else
-                {
-                    if (c == 2)
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r
-                        long r = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r *= k;
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("A(" + t + "/" + n + ") = " + r);
-                    }
-                    else
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r1
-                        long r1 = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r1 *= k;
-                        // calcul de r2
-                        long r2 = 1;
-                        for (int k = 1; k <= n; k++)
-                            r2 *= k;
-                        // calcul de r3
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
-                    }
+                    case '1':
+                        Permutation();
+                        break;
+                    case '2':
+                        Arrangement();
+                        break;
+                    case '3':
+                        Combinaison();
+                        break;
+                    case '0':
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Veuillez entrer une saisie valide.");
+                        break;
                 }
             }
             Console.ReadLine();
