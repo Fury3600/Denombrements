@@ -4,6 +4,13 @@ namespace Denombrements
 {
     class Program
     {
+        /// <summary>
+        /// Calcule les factorielles demandée par les opérations pour les arrangements, les combinaisons et les permutations.
+        /// (Par exemple: 5! = 1*2*3*4*5)
+        /// </summary>
+        /// <param name="initialisation"> L'initialisation de la boucle </param>
+        /// <param name="totalNombres"> Le nombre jusqu'où va la factorielle </param>
+        /// <returns></returns>
         static long MultiplicationFactorielle(int initialisation, int totalNombres)
         {
             long permutations = 1;
